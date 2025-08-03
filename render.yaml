@@ -9,8 +9,9 @@ services:
       - key: FLASK_ENV
         value: production
       - key: FLASK_APP
-        value: backend:create_app
+        value: wsgi.py
       - key: ADMIN_EMAIL
         value: yoogesh06@gmail.com
       - key: EMAIL_APP_PASSWORD
         value: iedk xtbp tffh ccgs
+
