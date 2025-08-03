@@ -1,0 +1,61 @@
+/* styles/contact-messages.css */
+.messages-container {
+  padding: 1.5rem;
+}
+
+.messages-container h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.messages-table-wrapper {
+  overflow-x: auto;
+}
+
+.messages-table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #d1d5db;
+  font-size: 0.875rem;
+}
+
+.messages-table thead {
+  background-color: #f3f4f6;
+}
+
+.messages-table th,
+.messages-table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.messages-table th {
+  font-weight: 600;
+}
+
+.messages-table td:first-child,
+.messages-table td:last-child {
+  text-align: center;
+}
+
+.no-messages {
+  color: #6b7280;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
