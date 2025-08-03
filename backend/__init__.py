@@ -33,3 +33,6 @@ def create_app():
     app.register_blueprint(public_routes.bp)
 
     return app
+
+# ✅ This is required for Gunicorn: exposes `app` variable
+app = create_app()
