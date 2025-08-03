@@ -4,12 +4,13 @@ services:
     env: python
     region: Oregon
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn backend:app
+    startCommand: flask db upgrade && gunicorn backend:create_app
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: FLASK_APP
+        value: backend:create_app
       - key: ADMIN_EMAIL
         value: yoogesh06@gmail.com
       - key: EMAIL_APP_PASSWORD
         value: iedk xtbp tffh ccgs
-
