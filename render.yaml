@@ -2,7 +2,7 @@ services:
   - type: web
     name: portfolio-backend
     env: python
-    region: india
+    region: Oregon
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn backend:app
     envVars:
@@ -12,3 +12,4 @@ services:
         value: yoogesh06@gmail.com
       - key: EMAIL_APP_PASSWORD
         value: iedk xtbp tffh ccgs
+
