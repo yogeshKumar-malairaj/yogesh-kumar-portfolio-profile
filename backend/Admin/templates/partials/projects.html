@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="{{ url_for('admin.static', filename='css/projects.css') }}">
+
+<div class="projects-container">
+  <h2 class="projects-heading">💼 Projects Section</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Add New Project Form -->
+  <div class="add-project-form">
+    <h3 class="form-heading">Add New Project</h3>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('admin.dashboard', page='projects') }}">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" name="title" class="form-input" placeholder="ex: New App" required>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Description</label>
+          <textarea name="description" rows="3" class="form-textarea" required placeholder="ex: This is ecommerce based website"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Project Image</label>
+          <input type="file" name="image_url" accept="image/*" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tech Stack</label>
+          <input type="text" name="tech_stack" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">GitHub Link</label>
+          <input type="url" name="github_link" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Demo Link</label>
+          <input type="url" name="demo_link" class="form-input">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-button">
+          Add Project
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="section-divider">
+
+  <h3 class="list-heading">Your Projects</h3>
+
+{% if projects %}
+<div class="table-responsive">
+  <table class="projects-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Tech Stack</th>
+        <th>Description</th>
+        <th>Links</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr class="project-row">
+        <td class="project-image">
+          {% if project.image_url %}
+            <img src="{{ url_for('static', filename='uploads/' + project.image_url) }}" 
+                 alt="{{ project.title }}" 
+                 class="project-thumbnail"
+                 style=" width50px;
+                 height:50px;">
+          {% else %}
+            <div class="no-image">No Image</div>
+          {% endif %}
+        </td>
+        <td class="project-title">{{ project.title }}</td>
+        <td class="project-tech">{{ project.tech_stack }}</td>
+        <td class="project-description">{{ project.description|truncate(100) }}</td>
+        <td class="project-links">
+          {% if project.github_link %}
+            <a href="{{ project.github_link }}" target="_blank" class="link-icon github-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          {% endif %}
+          {% if project.demo_link %}
+            <a href="{{ project.demo_link }}" target="_blank" class="link-icon demo-link" title="Live Demo">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          {% endif %}
+        </td>
+        <td class="project-actions">
+          <form method="POST" action="{{ url_for('admin.dashboard', page='projects') }}" class="delete-form">
+            <input type="hidden" name="delete_id" value="{{ project.id }}">
+            <button type="submit" class="delete-button">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="no-projects">No projects added yet.</p>
+{% endif %}
+</div>
