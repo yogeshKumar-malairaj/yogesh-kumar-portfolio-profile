@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #05203E;
+            color: white;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            display: block;
+            padding: 1rem;
+            background: #023E77;
+            text-decoration: none;
+            color: white;
+        }
+
+        .sidebar-brand h3 {
+            margin: 0.5rem 0 0 0;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #BADEEF;
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            background-color: #023E77;
+            color: white;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #05203E;
+            cursor: pointer;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1002;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 1rem;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        /* For screens smaller than 1080px */
+        @media (max-width: 1080px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+        }
+
+        /* For screens larger than 1080px */
+        @media (min-width: 1081px) {
+            .sidebar {
+                transform: translateX(0) !important;
+            }
+            
+            .sidebar-overlay {
+                display: none !important;
+            }
+            
+            .sidebar-toggle {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars" id="toggleIcon"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <a href="#" class="sidebar-brand">
+                Welcome,
+                <h3>Yogesh Kumar</h3>
+            </a>
+            <ul class="sidebar-nav">
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='dashboard') }}" class="nav-link {% if page == 'dashboard' %}active{% endif %}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='welcome') }}" class="nav-link {% if page == 'welcome' %}active{% endif %}">
+                        <i class="fas fa-fw fa-home"></i>
+                        <span>Welcome</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='about') }}" class="nav-link {% if page == 'about' %}active{% endif %}">
+                        <i class="fas fa-fw fa-info-circle"></i>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='services') }}" class="nav-link {% if page == 'services' %}active{% endif %}">
+                        <i class="fa-brands fa-servicestack"></i>
+                        <span>Services</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='skills') }}" class="nav-link {% if page == 'skills' %}active{% endif %}">
+                        <i class="fa-solid fa-atom"></i>
+                        <span>Skills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='projects') }}" class="nav-link {% if page == 'projects' %}active{% endif %}">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Projects</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='project_messages') }}" class="nav-link {% if page == 'project_messages' %}active{% endif %}">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Project_messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='reviews') }}" class="nav-link {% if page == 'reviews' %}active{% endif %}">
+                        <i class="fa-regular fa-comments"></i>
+                        <span>Reviews</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='footer') }}" class="nav-link {% if page == 'footer' %}active{% endif %}">
+                        <i class="fa-regular fa-copyright"></i>
+                        <span>Footer</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='messages') }}" class="nav-link {% if page == 'messages' %}active{% endif %}">
+                        <i class="fa-regular fa-message"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='automessage') }}" class="nav-link {% if page == 'automessage' %}active{% endif %}">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>Auto Message</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='clients') }}" class="nav-link {% if page == 'clients' %}active{% endif %}">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Client</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard', page='clientmessage') }}" class="nav-link {% if page == 'clientmessage' %}active{% endif %}">
+                        <i class="fa-solid fa-file"></i>
+                        <span>Project</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.logout') }}" class="nav-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">{% block title %}{{ page|title }}{% endblock %}</h1>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    {% if page == 'dashboard' %}
+                        {% include 'partials/dashboard_summary.html' %}
+                    {% elif page == 'welcome' %}
+                        {% include 'partials/welcome.html' %}
+                    {% elif page == 'about' %}
+                        {% include 'partials/about.html' %}
+                    {% elif page == 'services' %}
+                        {% include 'partials/services.html' %}
+                    {% elif page == 'skills' %}
+                        {% include 'partials/skills.html' %}
+                    {% elif page == 'projects' %}
+                        {% include 'partials/projects.html' %}
+                    {% elif page == "project_messages" %}
+                        {% include "partials/project_messages.html" %}
+                    {% elif page == 'reviews' %}
+                        {% include 'partials/reviews.html' %}
+                    {% elif page == 'footer' %}
+                        {% include 'partials/footer.html' %}
+                    {% elif page == 'messages' %}
+                        {% include 'partials/messages.html' %}
+                    {% elif page == 'automessage' %}
+                        {% include 'partials/auto_message.html' %}
+                    {% elif page == 'clientmessage' %}
+                        {% include 'partials/clientmessage.html' %}
+                    {% else %}
+                        <p>Page not found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const overlay = document.getElementById('sidebarOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Toggle sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Change icon based on sidebar state
+            if (sidebar.classList.contains('active')) {
+                toggleIcon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                toggleIcon.classList.replace('fa-times', 'fa-bars');
+            }
+        }
+
+        // Close sidebar when clicking on overlay or nav link
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            toggleIcon.classList.replace('fa-times', 'fa-bars');
+        }
+
+        // Event listeners
+        toggleBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        
+        // Close sidebar when any nav link is clicked (for mobile)
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1080) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1080) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                toggleIcon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* Base Container */
+  .services-container {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Heading Styles */
+  .services-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1rem;
+  }
+
+  /* Form Styles */
+  .services-form {
+    margin-bottom: 1.5rem;
+  }
+
+  .services-form-grid {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .services-form-grid {
+      grid-template-rows: repeat(3, 1fr);
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .form-input {
+    width: 60%;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .form-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+
+  /* Button Styles */
+  .form-actions {
+    margin-top: 1rem;
+  }
+
+  .submit-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .submit-button:hover {
+    background-color: #1d4ed8;
+  }
+
+  /* Preview Section */
+  .preview-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Table Styles */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .services-table {
+    width: 100%;
+    font-size: 0.875rem;
+    border: 1px solid #e5e7eb;
+    border-collapse: collapse;
+  }
+
+  .table-header {
+    background-color: #f3f4f6;
+  }
+
+  .table-cell {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  /* Icon Text */
+  .icon-text {
+    margin-left: 0.5rem;
+  }
+
+  /* Delete Button */
+  .delete-button {
+    color: #dc2626;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+
+  .delete-button:hover {
+    color: #b91c1c;
+  }
+
+  /* No Content Message */
+  .no-content-message {
+    color: #6b7280;
+    font-style: italic;
+  }

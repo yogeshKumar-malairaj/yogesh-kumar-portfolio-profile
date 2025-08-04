@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="{{ url_for('admin.static', filename='css/welcome.css') }}">
+
+<div class="welcome-container">
+  <h2 class="welcome-heading">🏠 Welcome Section</h2>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('admin.dashboard', page='welcome') }}">
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" value="{{ content.name if content else '' }}" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" name="title" value="{{ content.title if content else '' }}" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Subtitle</label>
+        <input type="text" name="sub_title" value="{{ content.sub_title if content else '' }}" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Profile Image</label>
+        <input type="file" name="profile_image_url" accept="image/*" class="form-input">
+        {% if content and content.profile_image_url %}
+          <p class="current-file">Current: {{ content.profile_image_url }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button">
+        Save Welcome Content
+      </button>
+    </div>
+  </form>
+
+  <hr class="section-divider">
+
+  <h3 class="preview-heading">📋 Preview of Saved Content</h3>
+
+  {% if content %}
+  <div class="table-wrapper">
+    <table class="preview-table">
+      <thead class="table-header">
+        <tr>
+          <th class="table-cell">Field</th>
+          <th class="table-cell">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="table-cell">Name</td><td class="table-cell">{{ content.name }}</td>
+        <tr><td class="table-cell">Title</td><td class="table-cell">{{ content.title }}</td></tr>
+        <tr><td class="table-cell">Subtitle</td><td class="table-cell">{{ content.sub_title }}</td></tr>
+        <tr><td class="table-cell">Profile Image</td>
+            <td class="table-cell">
+              {% if content.profile_image_url %}
+                  <img src="{{ url_for('static', filename='uploads/' + content.profile_image_url) }}" class="preview-image"style="width:50px;height50px;">
+              {% else %} 
+                No image uploaded
+              {% endif %}
+            </td></tr>
+        <tr><td class="table-cell">Created At</td><td class="table-cell">{{ content.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="no-content-message">No content available. Please add welcome section data using the form above.</p>
+  {% endif %}
+</div>

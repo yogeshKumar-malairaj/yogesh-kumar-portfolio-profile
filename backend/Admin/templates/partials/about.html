@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="{{ url_for('admin.static', filename='css/about.css') }}">
+
+<div class="about-container">
+  <h2 class="about-heading">👤 About Me Section</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('admin.dashboard', page='about') }}">
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" name="title" value=" " class="form-input" required>
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">Description</label>
+        <textarea name="description" rows="4" class="form-textarea"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" value=" " class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">About Image</label>
+        <input type="file" name="about_image_url" accept="image/*" class="form-input">
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">Email</label>
+        <input type="text" name="Email" rows="4" class="form-textarea" placeholder="email"></input>
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">DOB</label>
+        <input type="text" name="Dob" rows="4" class="form-textarea"></input>
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">Address</label>
+        <input type="text" name="Address" rows="4" class="form-textarea"></input>
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">CV_link</label>
+        <input type="text" name="CV_link" rows="4" class="form-textarea"></input>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="save-button">
+        Save
+      </button>
+    </div>
+  </form>
+
+  <hr class="section-divider">
+
+  <h3 class="preview-heading">📋 Preview of Saved Content</h3>
+
+  {% if content %}
+  <div class="table-wrapper">
+    <table class="preview-table">
+      <thead class="table-header">
+        <tr>
+          <th class="table-cell">Field</th>
+          <th class="table-cell">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="table-cell">Title</td><td class="table-cell">{{ content.title }}</td></tr>
+        <tr><td class="table-cell">Description</td><td class="table-cell">{{ content.description }}</td></tr>
+        <tr><td class="table-cell">About Image</td>
+            <td class="table-cell">
+              {% if content.about_image_url %}
+                  <img src="{{ url_for('static', filename='uploads/' + content.about_image_url) }}" class="preview-image" style="width:50px;height:50px;">
+              {% else %}
+                No image uploaded
+              {% endif %}
+            </td></tr>
+        <tr><td class="table-cell">Name</td><td class="table-cell">{{ content.Name }}</td></tr>
+        <tr><td class="table-cell">Email</td><td class="table-cell">{{ content.Email }}</td></tr>
+        <tr><td class="table-cell">DOB</td><td class="table-cell">{{ content.Dob }}</td></tr>
+        <tr><td class="table-cell">Address</td><td class="table-cell">{{ content.Address }}</td></tr>
+        <tr><td class="table-cell">CV_link</td><td class="table-cell">{{ content.CV_link }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="no-content-message">No content available. Please add About Me data using the form above.</p>
+  {% endif %}
+</div>

@@ -1,0 +1,155 @@
+/* Base Container */
+  .projects-container {
+    padding: 1.5rem;
+  }
+
+  /* Heading Styles */
+  .projects-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1rem;
+  }
+
+  /* Form Styles */
+  .projects-form {
+    margin-bottom: 1.5rem;
+  }
+
+  .projects-form-grid {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .projects-form-grid {
+      grid-template-rows: repeat(2, 1fr);
+    }
+    .full-width {
+      grid-row: span 2;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .form-input, .form-textarea {
+    width: 60%;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+
+  .form-textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  /* Button Styles */
+  .form-actions {
+    margin-top: 1rem;
+  }
+
+  .submit-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .submit-button:hover {
+    background-color: #1d4ed8;
+  }
+
+  /* Preview Section */
+  .preview-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Table Styles */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .projects-table {
+    width: 100%;
+    font-size: 0.875rem;
+    border: 1px solid #e5e7eb;
+    border-collapse: collapse;
+  }
+
+  .table-header {
+    background-color: #f3f4f6;
+  }
+
+  .table-cell {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  /* Link Styles */
+  .github-link {
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .github-link:hover {
+    text-decoration: underline;
+  }
+
+  .demo-link {
+    color: #16a34a;
+    text-decoration: none;
+  }
+
+  .demo-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Delete Button */
+  .delete-button {
+    color: #dc2626;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+
+  .delete-button:hover {
+    color: #b91c1c;
+  }
+
+  /* No Content Message */
+  .no-content-message {
+    color: #6b7280;
+    font-style: italic;
+  }
