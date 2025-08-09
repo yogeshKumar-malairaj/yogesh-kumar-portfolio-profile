@@ -324,38 +324,43 @@ def dashboard():
     
     # --- Footer Section ---
     if page == "footer":
-        content = FooterContent.query.first()
         if request.method == "POST":
+            # DELETE logic
+            delete_id = request.form.get("delete_id")
+            if delete_id:
+                FooterContent.query.filter_by(id=delete_id).delete()
+                db.session.commit()
+                return redirect(url_for("admin.dashboard", page="footer"))
+    
+            # UPDATE / ADD logic
+            content = FooterContent.query.first()
+            form_data = {
+                "name": request.form.get("name"),
+                "footer_text": request.form.get("footer_text"),
+                "github_link": request.form.get("github_link"),
+                "linkedin_link": request.form.get("linkedin_link"),
+                "whatsapp_link": request.form.get("whatsapp_link"),
+                "instagram_link": request.form.get("instagram_link"),
+                "email": request.form.get("email"),
+                "location": request.form.get("location"),
+                "mobile": request.form.get("mobile"),
+                "copyright_txt": request.form.get("copyright_txt"),
+            }
+    
             if content:
-                content.Name = request.form["Name"]
-                content.footer_text = request.form["footer_text"]
-                content.github_link = request.form["github_link"]
-                content.linkedin_link = request.form["linkedin_link"]
-                content.Whatsapp_link = request.form["Whatsapp_link"]
-                content.Instagram_link = request.form["Instagram_link"]
-                content.email = request.form["email"]
-                content.location = request.form["location"]
-                content.mobile = request.form["mobile"]
-                content.copyright_txt = request.form["copyright_txt"]
+                for key, value in form_data.items():
+                    setattr(content, key, value)
             else:
-                content = FooterContent(
-                    Name = request.form["Name"],
-                    footer_text=request.form["footer_text"],
-                    github_link=request.form["github_link"],
-                    linkedin_link=request.form["linkedin_link"],
-                    Whatsapp_link = request.form["Whatsapp_link"],
-                    Instagram_link = request.form["Instagram_link"],
-                    email=request.form["email"],
-                    location=request.form["location"],
-                    mobile=request.form["mobile"],
-                    copyright_txt = request.form["copyright_txt"],
-                )
+                content = FooterContent(**form_data)
                 db.session.add(content)
+    
             db.session.commit()
             return redirect(url_for("admin.dashboard", page="footer"))
+    
+        content = FooterContent.query.first()
         footers = FooterContent.query.all()
-        return render_template("dashboard.html", page=page, content=content,footers = footers)
-
+        return render_template("dashboard.html", page=page, content=content, footers=footers)
+        
     # --- Contact Messages Section ---
     if page == "messages":
         if request.method == "POST" and request.form.get("delete_id"):
@@ -426,3 +431,4 @@ def logout():
     session.pop('admin_authenticated', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('admin.dashboard'))
+
