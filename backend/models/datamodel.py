@@ -56,16 +56,15 @@ class Project(db.Model):
     github_link = db.Column(db.String(255))
     demo_link = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-# --- Footer Section ---
+#------ footer Section----
 class FooterContent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Name = db.Column(db.String(50))
+    name = db.Column(db.String(50))
     footer_text = db.Column(db.String(255))
     github_link = db.Column(db.String(255))
     linkedin_link = db.Column(db.String(255))
-    Whatsapp_link = db.Column(db.String(255))
-    Instagram_link = db.Column(db.String(255))
+    whatsapp_link = db.Column(db.String(255))
+    instagram_link = db.Column(db.String(255))
     email = db.Column(db.String(120))
     location = db.Column(db.String(120))
     mobile = db.Column(db.String(20))
@@ -115,3 +114,4 @@ class Client(db.Model):
 
     def __repr__(self):
         return f"<Client {self.name}>"
+
