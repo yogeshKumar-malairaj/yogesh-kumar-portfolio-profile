@@ -5,9 +5,15 @@
 
   <form method="POST" action="{{ url_for('admin.dashboard', page='footer') }}">
     <div class="footer-settings-grid">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" value="{{ content.name if content else '' }}" placeholder="Your name or brand name">
+      </div>
+
       <div class="form-group">
         <label>Footer Text</label>
-        <input type="text" name="footer_text" value="{{ content.footer_text if content else '' }}" placeholder="Enter footer copyright text">
+        <input type="text" name="footer_text" value="{{ content.footer_text if content else '' }}" placeholder="Enter footer text">
       </div>
 
       <div class="form-group">
@@ -21,13 +27,13 @@
       </div>
 
       <div class="form-group">
-        <label>Whatsapp Link</label>
-        <input type="url" name="Whatsapp_link" value="{{ content.whatsapp_link if content else '' }}" placeholder="https://linkedin.com/in/username">
+        <label>WhatsApp Link</label>
+        <input type="url" name="whatsapp_link" value="{{ content.whatsapp_link if content else '' }}" placeholder="https://wa.me/1234567890">
       </div>
 
       <div class="form-group">
         <label>Instagram Link</label>
-        <input type="url" name="Instagram_link" value="{{ content.Instagram_link if content else '' }}" placeholder="https://linkedin.com/in/username">
+        <input type="url" name="instagram_link" value="{{ content.instagram_link if content else '' }}" placeholder="https://instagram.com/username">
       </div>
 
       <div class="form-group">
@@ -37,7 +43,7 @@
 
       <div class="form-group">
         <label>Mobile Number</label>
-        <input type="text" name="mobile" value="{{ content.mobile if content else '' }}" placeholder="+1 (123) 456-7890">
+        <input type="text" name="mobile" value="{{ content.mobile if content else '' }}" placeholder="+91 9876543210">
       </div>
 
       <div class="form-group">
@@ -46,63 +52,65 @@
       </div>
 
       <div class="form-group">
-        <label>copyright_txt</label>
-        <input type="url" name="copyright_txt" value="{{ content.copyright_txt if content else '' }}" placeholder="https://linkedin.com/in/username">
+        <label>Copyright Text</label>
+        <input type="text" name="copyright_txt" value="{{ content.copyright_txt if content else '' }}" placeholder="© 2025 Your Name. All rights reserved.">
       </div>
+
     </div>
 
     <div class="form-actions">
-      <button type="submit">
-        Save Footer Info
-      </button>
+      <button type="submit">Save Footer Info</button>
     </div>
   </form>
 
-    {% if footers %}
-    <div class="table-wrapper">
-      <table class="skills-table">
-        <thead class="table-header">
-          <tr>
-            <th class="table-cell">ID</th>
-            <th class="table-cell">FOOTER TEXT</th>
-            <th class="table-cell">NAME</th>
-            <th class="table-cell">GIT</th>
-            <th class="table-cell">LINKEDID</th>
-            <th class="table-cell">WHATSAPP</th>
-            <th class="table-cell">INSTAGRAM</th>
-            <th class="table-cell">EMAIL</th>
-            <th class="table-cell">LOCATION</th>
-            <th class="table-cell">MOBILE</th>
-            <th class="table-cell">COPY RIGHT</th>
-          </tr>
-        </thead>
-        <tbody>
-
-        {% for footer in footers %}
+  {% if footers %}
+  <div class="table-wrapper">
+    <table class="skills-table">
+      <thead class="table-header">
         <tr>
-          <td class="table-cell">{{ footer.id }}</td>
-          <td class="table-cell">{{ footer.footer_text }}</td>
-          <td class="table-cell">{{ footer.Name }}</td>
-          <td class="table-cell">{{ footer.github_link }}</td>
-          <td class="table-cell">{{ footer.linkedin_link }}</td>
-          <td class="table-cell">{{ footer.whatsapp_link }}</td>
-          <td class="table-cell">{{ footer.Instagram_link }}</td>
-          <td class="table-cell">{{ footer.email }}</td>
-          <td class="table-cell">{{ footer.location }}</td>
-          <td class="table-cell">{{ footer.mobile }}</td>
-          <td class="table-cell">{{ footer.copyright_txt }}</td>
-          <td class="table-cell text-center">
-          <form method="POST" action="{{ url_for('admin.dashboard', page='footer') }}" class="delete-form">
+          <th>ID</th>
+          <th>Name</th>
+          <th>Footer Text</th>
+          <th>GitHub</th>
+          <th>LinkedIn</th>
+          <th>WhatsApp</th>
+          <th>Instagram</th>
+          <th>Email</th>
+          <th>Location</th>
+          <th>Mobile</th>
+          <th>Copyright</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for footer in footers %}
+        <tr>
+          <td>{{ footer.id }}</td>
+          <td>{{ footer.name }}</td>
+          <td>{{ footer.footer_text }}</td>
+          <td>{{ footer.github_link }}</td>
+          <td>{{ footer.linkedin_link }}</td>
+          <td>{{ footer.whatsapp_link }}</td>
+          <td>{{ footer.instagram_link }}</td>
+          <td>{{ footer.email }}</td>
+          <td>{{ footer.location }}</td>
+          <td>{{ footer.mobile }}</td>
+          <td>{{ footer.copyright_txt }}</td>
+          <td class="text-center">
+            <form method="POST" action="{{ url_for('admin.dashboard', page='footer') }}" class="delete-form">
               <input type="hidden" name="delete_id" value="{{ footer.id }}">
-              <button type="submit" class="delete-button" onclick="return confirm('Delete this skill?')">Delete</button>
-          </form>
+              <button type="submit" class="delete-button" onclick="return confirm('Delete this footer entry?')">Delete</button>
+            </form>
           </td>
         </tr>
-        {% endfor %}
+      {% endfor %}
       </tbody>
     </table>
   </div>
   {% else %}
-  <p class="no-content-message">No skills added yet.</p>
+  <p class="no-content-message">No footer info added yet.</p>
   {% endif %}
+</div>
+
+
 </div>
