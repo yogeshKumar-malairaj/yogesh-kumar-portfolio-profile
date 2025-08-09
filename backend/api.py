@@ -95,22 +95,27 @@ def get_reviews():
     ])
 
 
-@api_bp.route("/api/footer")
+@api_bp.route("/api/footer", methods=["GET"])
 def get_footer():
     content = FooterContent.query.first()
+
     if not content:
         return jsonify({"error": "No footer content"}), 404
+
     return jsonify({
-        "Name": content.Name,
+        "id": content.id,
+        "name": content.name,
         "footer_text": content.footer_text,
         "github_link": content.github_link,
         "linkedin_link": content.linkedin_link,
-        "Whatsapp_link": content.Whatsapp_link,
-        "Instagram_link": content.Instagram_link,
+        "whatsapp_link": content.whatsapp_link,
+        "instagram_link": content.instagram_link,
         "email": content.email,
         "location": content.location,
-        "mobile": content.mobile
+        "mobile": content.mobile,
+        "copyright_txt": content.copyright_txt
     })
+
 
 # ------------ POST APIs ------------ #
 
@@ -190,3 +195,4 @@ def post_review():
     send_otp_email("yoogesh06@gmail.com", body, subject="Client Review Submitted")
 
     return jsonify({"success": True, "message": "Review submitted"}), 200
+
